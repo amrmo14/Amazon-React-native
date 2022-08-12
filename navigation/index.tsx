@@ -11,19 +11,24 @@ import * as React from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
+import { StyleSheet } from 'react-native';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
+import TabFourScreen from '../screens/TabFourScreen';
 import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import TabThreeScreen from '../screens/TabThreeScreen';
+import TabTwoScreen from '../screens/UserScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import { View ,Text } from '../components/Themed';
+import UserScreen from '../screens/UserScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      theme={colorScheme === 'light' ? DarkTheme : DefaultTheme}>
       <RootNavigator />
     </NavigationContainer>
   );
@@ -38,7 +43,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false, }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
@@ -58,41 +63,138 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="home"
         component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
+        options={({ navigation }: RootTabScreenProps<'home'>) => ({
           title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
+          headerShown:false,
+          tabBarIcon: ({ color, focused }) =>
+          
+          focused? (
+            <View style={{ borderTopWidth:4, width: "100%", height: "100%", borderColor: "#088977",backgroundColor:"white" }}>
+              <View style={{marginTop:9,  justifyContent: "center", alignItems: "center",backgroundColor:"white" }}>
+              <TabBarIcon     name="home" color={"#088977"} />
+              </View>
+               
+            </View>
+            
+            ) :
+            (
+              <TabBarIcon name="home" color={"#088977"} />
+            )
+          ,
+          tabBarLabel:() => {return null},
+       
+          // headerRight: () => (
+          //   <Pressable
+          //     onPress={() => navigation.navigate('Modal')}
+          //     style={({ pressed }) => ({
+          //       opacity: pressed ? 0.5 : 1,
+          //     })}>
+          //     <FontAwesome
+          //       name="search"
+          //       size={25}
+          //       color={"#088977"}
+          //       style={{ marginRight: 15 }}
+          //     />
+          //   </Pressable>
+          // ),
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="User"
+        component={UserScreen}
+        
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'User',
+          tabBarLabel:() => {return null},
+          headerShown:false,
+          tabBarIcon: ({ focused, color }) => 
+          focused? (
+            <View style={{ borderTopWidth:4, width: "100%", height: "100%", borderColor: "#088977",backgroundColor:"white" }}>
+              <View style={{marginTop:9,  justifyContent: "center", alignItems: "center",backgroundColor:"white" }}>
+              <TabBarIcon     name="user-circle" color={"#088977"} />
+              </View>
+               
+            </View>
+            
+            ) :
+            (
+              <TabBarIcon name="user-circle" color={"#088977"} />
+            )
+          
         }}
       />
+      <BottomTab.Screen
+        name="TabThree"
+        component={TabThreeScreen}
+        options={{
+          headerShown:false,
+          tabBarLabel:() => {return null},
+          title: 'Tab Three',
+          tabBarIcon: ({ color,focused }) => 
+          focused? (
+            <View style={{ borderTopWidth:4, width: "100%", height: "100%", borderColor: "#088977",backgroundColor:"white" }}>
+              <View style={{marginTop:0,  justifyContent: "center", alignItems: "center",backgroundColor:"white",position:'absolute' }}>
+                <Text style={{color:'white',position:'relative',left:37,top:12,zIndex:1,fontSize:12}}>0</Text>
+                <View style={{position:'relative',zIndex:0,bottom:5,left:35,backgroundColor:"white"}}>
+                <TabBarIcon     name="shopping-cart" color={"#088977"} />
+                </View>
+              
+              </View>
+               
+            </View>
+            
+            ) :
+            (
+              <View style={{ width: "100%", height: "100%", borderColor: "#088977",backgroundColor:"white" }}>
+              <View style={{marginTop:4,  justifyContent: "center", alignItems: "center",backgroundColor:"white",position:'absolute' }}>
+                <Text style={{color:'white',position:'relative',left:37,top:12,zIndex:1,fontSize:12}}>0</Text>
+                <View style={{position:'relative',zIndex:0,bottom:5,left:35,backgroundColor:"white"}}>
+                <TabBarIcon     name="shopping-cart" color={"#088977"} />
+                </View>
+              
+              </View>
+               
+            </View>
+            )
+          
+        }}
+      />
+      <BottomTab.Screen
+        name="TabFour"
+        component={TabFourScreen}
+        
+        options={{
+          headerShown:false,
+          tabBarLabel:() => {return null},
+          title: 'Tab Four' ,
+          tabBarIcon: ({ color ,focused}) => 
+          focused? (
+            <View style={{ borderTopWidth:4, width: "100%", height: "100%", borderColor: "#088977",backgroundColor:"white" }}>
+              <View style={{marginTop:9,  justifyContent: "center", alignItems: "center",backgroundColor:"white" }}>
+              <TabBarIcon     name="align-justify" color={"#088977"} />
+              </View>
+               
+            </View>
+            
+            ) :
+            (
+              <TabBarIcon name="align-justify" color={"#088977"} />
+            )
+          ,
+        }}
+
+        
+      />
     </BottomTab.Navigator>
+
+    
   );
 }
 
@@ -103,5 +205,7 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={25} style={{ marginBottom: -3 }}  {...props} />;
 }
+
+

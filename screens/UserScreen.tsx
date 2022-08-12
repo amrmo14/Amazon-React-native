@@ -10,7 +10,7 @@ import { Button } from '@rneui/themed';
 
 
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'home'>) {
+export default function UserScreen({ navigation }: RootTabScreenProps<'home'>) {
   return (
     <View style={styles.container}>
       <LinearGradient
