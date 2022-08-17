@@ -23,6 +23,8 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../typ
 import LinkingConfiguration from './LinkingConfiguration';
 import { View ,Text } from '../components/Themed';
 import UserScreen from '../screens/UserScreen';
+import LoginScreen from '../screens/Login';
+import RegisterScreen from '../screens/Register';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -45,8 +47,10 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false, }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+      <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }} >
+        <Stack.Screen name="Modal" component={ModalScreen} options={{ headerShown: false, }}/>
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false, }}/>
+        <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false, }}/>
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -57,6 +61,7 @@ function RootNavigator() {
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
+
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
@@ -105,7 +110,7 @@ function BottomTabNavigator() {
           //   </Pressable>
           // ),
         })}
-      />
+      ></BottomTab.Screen>
       <BottomTab.Screen
         name="User"
         component={UserScreen}

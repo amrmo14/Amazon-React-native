@@ -10,7 +10,7 @@ import { Button } from '@rneui/themed';
 
 
 
-export default function UserScreen({ navigation }: RootTabScreenProps<'home'>) {
+export default function UserScreen({ navigation }: RootTabScreenProps<'User'>) {
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -20,7 +20,8 @@ export default function UserScreen({ navigation }: RootTabScreenProps<'home'>) {
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", backgroundColor: "transparent", paddingTop: 40, paddingHorizontal: 10 }}>
           <Image source={require('../assets/images/amazon_desk.png')} style={{ width: 100, height: 50, }} />
           <Pressable
-            onPress={() => navigation.navigate('Modal')}>
+            // onPress={}
+            >
             <FontAwesome
               name="search"
               size={25}
@@ -36,7 +37,7 @@ export default function UserScreen({ navigation }: RootTabScreenProps<'home'>) {
 
       <ScrollView style={{ width: "98%%" }} >
         <Button
-          // onPress={}
+          onPress={() => navigation.navigate('Login')}
           title="Sign In"
           containerStyle={{
             // height: 50,
@@ -56,7 +57,7 @@ export default function UserScreen({ navigation }: RootTabScreenProps<'home'>) {
         />
 
         <Button
-    // onPress={}
+    onPress={() => navigation.navigate('Register')}
           title="Create account"
           containerStyle={{
             // height: 50,
