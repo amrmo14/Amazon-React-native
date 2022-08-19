@@ -11,13 +11,14 @@ import { useEffect, useState } from "react";
 import { getAllProducts } from "../firebase/products";
 
 export default function TabOneScreen({
+  route,
   navigation,
 }: RootTabScreenProps<"home">) {
   let [products, setProducts] = useState([]);
+  // let { productsSearch } = route.params;
   useEffect(() => {
     getAllProducts().then((data) => {
       setProducts(data);
-      console.log(data[0].imgs[0]);
     });
   }, []);
   return (
@@ -166,28 +167,55 @@ export default function TabOneScreen({
             Creat lists with items you want,now or later
           </Text>
         </View> */}
-        {products?.map((product, index) => (
-          <View style={styles.productBox} key={index}>
-            <Text style={styles.productBox_discount}>
-              {product.Discount && product.Discount} %
-            </Text>
-            <Image
-              style={styles.productBox_img}
-              source={{
-                uri: product.imgs[0],
-              }}
-            />
-            <Text style={styles.productBox_name}>
-              {product.en.name.split(" ").slice(0, 6).join(" ")}...
-            </Text>
-            <View style={styles.productBox_priceBox}>
-              <Text style={styles.productBox_price}>{product.Price} EG</Text>
-            </View>
-            <View style={styles.productBox_BuyBox}>
-              <Text style={styles.productBox_buy}>Buy Now</Text>
-            </View>
-          </View>
-        ))}
+        {route.params?.productsSearch.length > 0
+          ? route.params?.productsSearch.map((product, index) => (
+              <View style={styles.productBox} key={index}>
+                <Text style={styles.productBox_discount}>
+                  {product.Discount && product.Discount} %
+                </Text>
+                <Image
+                  style={styles.productBox_img}
+                  source={{
+                    uri: product.imgs[0],
+                  }}
+                />
+                <Text style={styles.productBox_name}>
+                  {product.en.name.split(" ").slice(0, 6).join(" ")}...
+                </Text>
+                <View style={styles.productBox_priceBox}>
+                  <Text style={styles.productBox_price}>
+                    {product.Price} EG
+                  </Text>
+                </View>
+                <View style={styles.productBox_BuyBox}>
+                  <Text style={styles.productBox_buy}>Buy Now</Text>
+                </View>
+              </View>
+            ))
+          : products?.map((product, index) => (
+              <View style={styles.productBox} key={index}>
+                <Text style={styles.productBox_discount}>
+                  {product.Discount && product.Discount} %
+                </Text>
+                <Image
+                  style={styles.productBox_img}
+                  source={{
+                    uri: product.imgs[0],
+                  }}
+                />
+                <Text style={styles.productBox_name}>
+                  {product.en.name.split(" ").slice(0, 6).join(" ")}...
+                </Text>
+                <View style={styles.productBox_priceBox}>
+                  <Text style={styles.productBox_price}>
+                    {product.Price} EG
+                  </Text>
+                </View>
+                <View style={styles.productBox_BuyBox}>
+                  <Text style={styles.productBox_buy}>Buy Now</Text>
+                </View>
+              </View>
+            ))}
       </ScrollView>
     </View>
   );
